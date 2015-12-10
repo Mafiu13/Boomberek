@@ -11,49 +11,49 @@ import java.awt.event.KeyEvent;
  *
  * @author Jedi
  */
-public class Bomb extends Actors{
+public class Bomb extends Actors {
 
     private boolean space;
     private boolean startTimer;
     private boolean setB;
-  
-   
-public Bomb (Board board) {
-    super(board);
-    setSpriteName("bomb.jpg");
-    ile_bomb=0;
+
+    public Bomb(Board board) {
+        super(board);
+        setSpriteName("bomb.jpg");
+        ile_bomb = 0;
     }
 
-public void keyReleased(KeyEvent e) {
+    public void keyReleased(KeyEvent e) {
 
+    }
+
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    public boolean getTimer() {
+        return startTimer;
+    }
+
+    public void setTimer(boolean t) {
+        startTimer = t;
+    }
+
+    public boolean getB() {
+        return setB;
+    }
+
+    public int getIleBomb() {
+        return ile_bomb;
+    }
+
+    public void setB(boolean t) {
+        setB = t;
+    }
+
+    public void act() {
+        startTimer = true;
+
+    }
 
 }
-
-
-public void keyPressed(KeyEvent e) {
-
-
-}
-
-public boolean getTimer() 
-    { return startTimer; }
-public void setTimer(boolean t) 
-    { startTimer=t; }
-
-public boolean getB() 
-    { return setB; }
-public int getIleBomb() 
-    { return ile_bomb; }
-
-public void setB(boolean t) 
-    { setB=t; }
-
-public void act() { 
-    startTimer=true;
- 
-}
-
-}
-
-
-

@@ -7,8 +7,8 @@ package bomberman;
 
 /**
  *
- * @author Jedi
+ * @author Pawel
  */
-public class Player {
-
+public enum Move {
+    left, up, down, right, bomb,
 }

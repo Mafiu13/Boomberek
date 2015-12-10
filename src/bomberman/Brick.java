@@ -14,12 +14,9 @@ import java.awt.image.BufferedImage;
  */
 public class Brick extends Actors {
 
-
-
-public Brick (Board board) {
-    super(board);
-    setSpriteName("brick.jpg");
+    public Brick(Board board) {
+        super(board);
+        setSpriteName("brick.jpg");
     }
-
 
 }

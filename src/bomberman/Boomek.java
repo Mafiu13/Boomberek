@@ -4,7 +4,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
@@ -33,12 +32,10 @@ public class Boomek extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        
-        
-        
+
         Pane root = new Pane();
         root.setPrefSize(800, 600);
-       
+
         InputStream is = Files.newInputStream(Paths.get("./src/boom.jpg"));
         Image img = new Image(is);
         is.close();
@@ -62,8 +59,7 @@ public class Boomek extends Application {
 
                     gameMenu.setVisible(true);
                     ft.play();
-                }
-                else {
+                } else {
                     FadeTransition ft = new FadeTransition(Duration.seconds(0.5), gameMenu);
                     ft.setFromValue(1);
                     ft.setToValue(0);
@@ -72,18 +68,19 @@ public class Boomek extends Application {
                 }
             }
         });
-        
+
         primaryStage.setOnCloseRequest(ev -> {
             System.exit(0);
         });
-        
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     private class GameMenu extends Parent {
+
         public GameMenu(Stage primaryStage) {
-                    
+
             VBox menu0 = new VBox(10);
             VBox menu1 = new VBox(10);
             VBox menu2 = new VBox(10);
@@ -93,7 +90,7 @@ public class Boomek extends Application {
 
             menu1.setTranslateX(100);
             menu1.setTranslateY(200);
-            
+
             menu2.setTranslateX(100);
             menu2.setTranslateY(200);
 
@@ -119,8 +116,6 @@ public class Boomek extends Application {
 //                //root.setVisible(false);
 //
 //            });
-
-
             MenuButton btnOptions = new MenuButton("PLAY");
             btnOptions.setOnMouseClicked(event -> {
                 getChildren().add(menu1);
@@ -164,24 +159,18 @@ public class Boomek extends Application {
 
             MenuButton btnCreateS = new MenuButton("CREATE SERVER");
             btnCreateS.setOnMouseClicked(event -> {
-                
+
                 primaryStage.hide();
-               // new Thread() {
-                //    public void run() {
+                Bomberman bomberman = new Bomberman(1);
+                bomberman.game();
 
-                        Bomberman bomberman = new Bomberman();
-                        bomberman.game();
-                        
-
-                  //  }
-            //    }.start();
                 
                 primaryStage.show();
                 //System.exit(0);
                 //root.setVisible(false);
-                
+
             });
-                
+
             MenuButton btnJoinG = new MenuButton("JOIN GAME");
             btnJoinG.setOnMouseClicked(event -> {
                 getChildren().add(menu2);
@@ -217,7 +206,7 @@ public class Boomek extends Application {
                     getChildren().remove(menu2);
                 });
             });
-            
+
             menu0.getChildren().addAll(btnOptions, btnExit);
             menu1.getChildren().addAll(btnBack, btnCreateS, btnJoinG);
             menu2.getChildren().addAll(btnConnect);
@@ -231,6 +220,7 @@ public class Boomek extends Application {
     }
 
     private static class MenuButton extends StackPane {
+
         private Text text;
 
         public MenuButton(String name) {
@@ -273,5 +263,3 @@ public class Boomek extends Application {
         launch(args);
     }
 }
-
-

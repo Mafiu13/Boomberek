@@ -11,15 +11,11 @@ import java.awt.event.KeyEvent;
  *
  * @author Jedi
  */
-public class B1 extends Bomber{
-    
+public class B1 extends Bomber {
+
     public B1(Board board) {
         super(board);
         setSpriteName("bomber.jpg");
     }
-    
-
-
-
 
 }
