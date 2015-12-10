@@ -80,11 +80,9 @@ public class Boomek extends Application {
 
     private class GameMenu extends Parent {
 
-<<<<<<< HEAD
-        public GameMenu(Stage primaryStage) {
-=======
+
         public GameMenu(Stage primaryStage) throws IOException {
->>>>>>> 9cfc8e0d4c98d41bb7cf4727053d36792998973f
+
 
             VBox menu0 = new VBox(10);
             VBox menu1 = new VBox(10);
@@ -103,26 +101,7 @@ public class Boomek extends Application {
 
             menu1.setTranslateX(offset);
 
-<<<<<<< HEAD
-//            MenuButton btnResume = new MenuButton("START");
-//            btnResume.setOnMouseClicked(event -> {
-//                
-//                primaryStage.hide();
-//               // new Thread() {
-//                //    public void run() {
-//
-//                        Bomberman bomberman = new Bomberman();
-//                        bomberman.game();
-//
-//                  //  }
-//            //    }.start();
-//                
-//                primaryStage.show();
-//                //System.exit(0);
-//                //root.setVisible(false);
-//
-//            });
-=======
+
             MenuButton btnStart = new MenuButton("START");
             btnStart.setOnMouseClicked(event -> {
 
@@ -130,7 +109,7 @@ public class Boomek extends Application {
                 // new Thread() {
                 //    public void run() {
 
-                Bomberman bomberman = new Bomberman();
+                Bomberman bomberman = new Bomberman(1);
                 bomberman.game();
 
                 //  }
@@ -141,7 +120,7 @@ public class Boomek extends Application {
 
             });
 
->>>>>>> 9cfc8e0d4c98d41bb7cf4727053d36792998973f
+
             MenuButton btnOptions = new MenuButton("PLAY");
             btnOptions.setOnMouseClicked(event -> {
                 getChildren().add(menu1);
@@ -185,18 +164,7 @@ public class Boomek extends Application {
 
             MenuButton btnCreateS = new MenuButton("CREATE SERVER");
             btnCreateS.setOnMouseClicked(event -> {
-<<<<<<< HEAD
 
-                primaryStage.hide();
-                Bomberman bomberman = new Bomberman(1);
-                bomberman.game();
-
-                
-                primaryStage.show();
-                //System.exit(0);
-                //root.setVisible(false);
-
-=======
                 Server cl = new Server();
                 try{
                 cl.CreateServer();
@@ -227,7 +195,7 @@ public class Boomek extends Application {
 //                
 //                primaryStage.show();
 
->>>>>>> 9cfc8e0d4c98d41bb7cf4727053d36792998973f
+
             });
 
             MenuButton btnJoinG = new MenuButton("JOIN GAME");
@@ -293,11 +261,9 @@ public class Boomek extends Application {
 //                });
             });
 
-<<<<<<< HEAD
-            menu0.getChildren().addAll(btnOptions, btnExit);
-=======
+
             menu0.getChildren().addAll(btnStart, btnOptions, btnExit);
->>>>>>> 9cfc8e0d4c98d41bb7cf4727053d36792998973f
+
             menu1.getChildren().addAll(btnBack, btnCreateS, btnJoinG);
             menu2.getChildren().addAll(btnConnect, btnCreate);
 
