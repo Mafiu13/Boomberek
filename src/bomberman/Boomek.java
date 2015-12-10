@@ -1,9 +1,9 @@
 package bomberman;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
 
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
@@ -33,12 +33,10 @@ public class Boomek extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        
-        
-        
+
         Pane root = new Pane();
         root.setPrefSize(800, 600);
-       
+
         InputStream is = Files.newInputStream(Paths.get("./src/boom.jpg"));
         Image img = new Image(is);
         is.close();
@@ -62,8 +60,7 @@ public class Boomek extends Application {
 
                     gameMenu.setVisible(true);
                     ft.play();
-                }
-                else {
+                } else {
                     FadeTransition ft = new FadeTransition(Duration.seconds(0.5), gameMenu);
                     ft.setFromValue(1);
                     ft.setToValue(0);
@@ -72,18 +69,19 @@ public class Boomek extends Application {
                 }
             }
         });
-        
+
         primaryStage.setOnCloseRequest(ev -> {
             System.exit(0);
         });
-        
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     private class GameMenu extends Parent {
-        public GameMenu(Stage primaryStage) {
-                    
+
+        public GameMenu(Stage primaryStage) throws IOException {
+
             VBox menu0 = new VBox(10);
             VBox menu1 = new VBox(10);
             VBox menu2 = new VBox(10);
@@ -93,7 +91,7 @@ public class Boomek extends Application {
 
             menu1.setTranslateX(100);
             menu1.setTranslateY(200);
-            
+
             menu2.setTranslateX(100);
             menu2.setTranslateY(200);
 
@@ -101,25 +99,23 @@ public class Boomek extends Application {
 
             menu1.setTranslateX(offset);
 
-//            MenuButton btnResume = new MenuButton("START");
-//            btnResume.setOnMouseClicked(event -> {
-//                
-//                primaryStage.hide();
-//               // new Thread() {
-//                //    public void run() {
-//
-//                        Bomberman bomberman = new Bomberman();
-//                        bomberman.game();
-//
-//                  //  }
-//            //    }.start();
-//                
-//                primaryStage.show();
-//                //System.exit(0);
-//                //root.setVisible(false);
-//
-//            });
+            MenuButton btnStart = new MenuButton("START");
+            btnStart.setOnMouseClicked(event -> {
 
+                primaryStage.hide();
+                // new Thread() {
+                //    public void run() {
+
+                Bomberman bomberman = new Bomberman();
+                bomberman.game();
+
+                //  }
+                //    }.start();
+                primaryStage.show();
+                //System.exit(0);
+                //root.setVisible(false);
+
+            });
 
             MenuButton btnOptions = new MenuButton("PLAY");
             btnOptions.setOnMouseClicked(event -> {
@@ -164,63 +160,104 @@ public class Boomek extends Application {
 
             MenuButton btnCreateS = new MenuButton("CREATE SERVER");
             btnCreateS.setOnMouseClicked(event -> {
-                
-                primaryStage.hide();
-               // new Thread() {
-                //    public void run() {
+                Server cl = new Server();
+                try{
+                cl.CreateServer();
+                }
+                catch(IOException e){
+                    
+                }
+//                getChildren().add(menu2);
+//
+//                TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu1);
+//                tt.setToX(menu1.getTranslateX() - offset);
+//
+//                TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menu2);
+//                tt1.setToX(menu1.getTranslateX());
+//
+//                tt.play();
+//                tt1.play();
+//
+//                tt.setOnFinished(evt -> {
+//                    getChildren().remove(menu1);
+//                });
+//                primaryStage.hide();
+//
+//
+//                        Bomberman bomberman = new Bomberman();
+//                        bomberman.game();
+//
+//                
+//                primaryStage.show();
 
-                        Bomberman bomberman = new Bomberman();
-                        bomberman.game();
-                        
-
-                  //  }
-            //    }.start();
-                
-                primaryStage.show();
-                //System.exit(0);
-                //root.setVisible(false);
-                
             });
-                
+
             MenuButton btnJoinG = new MenuButton("JOIN GAME");
             btnJoinG.setOnMouseClicked(event -> {
-                getChildren().add(menu2);
-
-                TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu1);
-                tt.setToX(menu1.getTranslateX() - offset);
-
-                TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menu2);
-                tt1.setToX(menu1.getTranslateX());
-
-                tt.play();
-                tt1.play();
-
-                tt.setOnFinished(evt -> {
-                    getChildren().remove(menu1);
-                });
+                Client cl = new Client();
+                try{
+                cl.CreateClient();
+                }
+                catch(IOException e){
+                    
+                }
+//                getChildren().add(menu2);
+//
+//                TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu1);
+//                tt.setToX(menu1.getTranslateX() - offset);
+//
+//                TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menu2);
+//                tt1.setToX(menu1.getTranslateX());
+//
+//                tt.play();
+//                tt1.play();
+//
+//                tt.setOnFinished(evt -> {
+//                    getChildren().remove(menu1);
+//                });
             });
 
             MenuButton btnConnect = new MenuButton("Connecting");
             btnConnect.setOnMouseClicked(event -> {
-                getChildren().add(menu1);
-
-                TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu2);
-                tt.setToX(menu2.getTranslateX() + offset);
-
-                TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menu1);
-                tt1.setToX(menu2.getTranslateX());
-
-                tt.play();
-                tt1.play();
-
-                tt.setOnFinished(evt -> {
-                    getChildren().remove(menu2);
-                });
+                
+                
+//                getChildren().add(menu1);
+//
+//                TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu2);
+//                tt.setToX(menu2.getTranslateX() + offset);
+//
+//                TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menu1);
+//                tt1.setToX(menu2.getTranslateX());
+//
+//                tt.play();
+//                tt1.play();
+//
+//                tt.setOnFinished(evt -> {
+//                    getChildren().remove(menu2);
+//                });
             });
-            
-            menu0.getChildren().addAll(btnOptions, btnExit);
+            MenuButton btnCreate = new MenuButton("Creating");
+            btnCreate.setOnMouseClicked(event -> {
+                
+//                getChildren().add(menu1);
+//
+//                TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu2);
+//                tt.setToX(menu2.getTranslateX() + offset);
+//
+//                TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menu1);
+//                tt1.setToX(menu2.getTranslateX());
+//
+//                tt.play();
+//                tt1.play();
+//
+//                tt.setOnFinished(evt -> {
+//                    getChildren().remove(menu2);
+//                });
+            });
+
+            menu0.getChildren().addAll(btnStart, btnOptions, btnExit);
             menu1.getChildren().addAll(btnBack, btnCreateS, btnJoinG);
-            menu2.getChildren().addAll(btnConnect);
+            menu2.getChildren().addAll(btnConnect, btnCreate);
 
             Rectangle bg = new Rectangle(800, 600);
             bg.setFill(Color.GREY);
@@ -231,6 +268,7 @@ public class Boomek extends Application {
     }
 
     private static class MenuButton extends StackPane {
+
         private Text text;
 
         public MenuButton(String name) {
@@ -273,5 +311,3 @@ public class Boomek extends Application {
         launch(args);
     }
 }
-
-
