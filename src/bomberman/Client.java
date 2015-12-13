@@ -135,9 +135,16 @@ Thread t1 = new Thread() {
             public void run(){
                 int y =1;
                 int x=2;
-                try{
                 
-                 DataInputStream in = new DataInputStream(socket.getInputStream());
+                try{
+                    Socket my_socket = null;
+                    try {
+                        my_socket = new Socket(HOST, PORT);
+                    } catch (Exception e) {
+                        System.err.println("Could not connect to " + HOST + ":" + PORT);
+                        System.exit(1);
+                    }
+                    DataInputStream in = new DataInputStream(my_socket.getInputStream());
                 
                 if(in.available()!=0){
                 
