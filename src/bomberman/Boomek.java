@@ -26,6 +26,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.input.KeyCode;
+import javafx.scene.text.Font;
 
 public class Boomek extends Application {
 
@@ -36,6 +37,7 @@ public class Boomek extends Application {
 
         Pane root = new Pane();
         root.setPrefSize(800, 600);
+        root.setMaxSize(800, 600);
 
         InputStream is = Files.newInputStream(Paths.get("./src/boom.jpg"));
         Image img = new Image(is);
@@ -85,20 +87,25 @@ public class Boomek extends Application {
             VBox menu0 = new VBox(10);
             VBox menu1 = new VBox(10);
             VBox menu2 = new VBox(10);
-             VBox menu3 = new VBox(10);
-            
-            Text te = new Text(260,70, "Boomberman");
-           te.setFont(te.getFont().font(60));
+            VBox menu3 = new VBox(10);
+
+            Text te = new Text(260, 70, "Boomberman");
+            te.setFont(Font.font("Arial", 60));
             te.setFill(Color.WHITE);
-            
-            Text inf0 = new Text(70,120, "Control your Bomberman and try to kill enemy Bomberman");
-            Text inf1 = new Text(70,160,"Use arrows to move Bomberman and SPACE to set the bomb");
-            Text inf2 = new Text(70,190,"Range of bomb's explosion will increase with time");
-            Text inf3 = new Text(70,230,"Good Luck!");
-                    
-                    
-                    
-           inf0.setFont(inf0.getFont().font(25));
+
+//            Text con = new Text(240,400, "Conecting...");
+//           con.setFont(Font.font("Arial",40));
+//            con.setFill(Color.WHITE);
+//            
+//            Text cre = new Text(220,400, "Creating Server");
+//           cre.setFont(Font.font("Arial",60));
+//            cre.setFill(Color.WHITE);
+            Text inf0 = new Text(70, 120, "Control your Bomberman and try to kill enemy Bomberman");
+            Text inf1 = new Text(70, 160, "Use arrows to move Bomberman and SPACE to set the bomb");
+            Text inf2 = new Text(70, 190, "Range of bomb's explosion will increase with time");
+            Text inf3 = new Text(70, 230, "Good Luck!");
+
+            inf0.setFont(inf0.getFont().font(25));
             inf0.setFill(Color.BLACK);
             inf1.setFont(inf1.getFont().font(25));
             inf1.setFill(Color.BLACK);
@@ -106,8 +113,6 @@ public class Boomek extends Application {
             inf2.setFill(Color.BLACK);
             inf3.setFont(inf3.getFont().font(40));
             inf3.setFill(Color.BLACK);
-            
-            
 
             menu0.setTranslateX(100);
             menu0.setTranslateY(200);
@@ -117,7 +122,7 @@ public class Boomek extends Application {
 
             menu2.setTranslateX(100);
             menu2.setTranslateY(200);
-            
+
             menu3.setTranslateX(100);
             menu3.setTranslateY(200);
 
@@ -129,12 +134,11 @@ public class Boomek extends Application {
             btnStart.setOnMouseClicked(event -> {
 
                 primaryStage.hide();
-  
+
                 Bomberman bomberman = new Bomberman(2);
                 bomberman.game();
 
                 primaryStage.show();
-
 
             });
 
@@ -173,12 +177,10 @@ public class Boomek extends Application {
                     getChildren().remove(menu0);
                 });
             });
-            
+
             MenuButton btnBack2 = new MenuButton("BACK");
             btnBack2.setOnMouseClicked(event -> {
                 getChildren().add(menu0);
-                
-                
 
                 TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu3);
                 tt.setToX(menu3.getTranslateX() + offset);
@@ -193,16 +195,7 @@ public class Boomek extends Application {
                     getChildren().remove(menu3);
                 });
             });
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+
             MenuButton btnExit = new MenuButton("EXIT");
             btnExit.setOnMouseClicked(event -> {
                 System.exit(0);
@@ -228,10 +221,8 @@ public class Boomek extends Application {
 
             MenuButton btnCreateS = new MenuButton("CREATE SERVER");
             btnCreateS.setOnMouseClicked(event -> {
-
+                primaryStage.hide();
                 boolean fl10 = false;
-
-                
 
                 Server ser = new Server();
                 try {
@@ -246,8 +237,6 @@ public class Boomek extends Application {
                 }
 
                 if (fl10 == true) {
-                    
-                    primaryStage.hide();
 
                     Bomberman bomberman = new Bomberman(1, ser);
                     bomberman.game();
@@ -268,9 +257,9 @@ public class Boomek extends Application {
 
             MenuButton btnJoinG = new MenuButton("JOIN GAME");
             btnJoinG.setOnMouseClicked(event -> {
+                boolean conect = false;
 
                 boolean fl11 = false;
-                
 
                 Client cl = new Client();
                 try {
@@ -285,7 +274,7 @@ public class Boomek extends Application {
 //                    
                     Bomberman bomberman = new Bomberman(2, cl);
                     bomberman.game();
-                    
+
                     try {
                         cl.ClientClose();
                     } catch (IOException e) {
@@ -293,77 +282,23 @@ public class Boomek extends Application {
                     }
 
                     primaryStage.show();
-                    
-                    
-                    
+
                 } else {
                     primaryStage.show();
                 }
 
-//                getChildren().add(menu2);
-//
-//                TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu1);
-//                tt.setToX(menu1.getTranslateX() - offset);
-//
-//                TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menu2);
-//                tt1.setToX(menu1.getTranslateX());
-//
-//                tt.play();
-//                tt1.play();
-//
-//                tt.setOnFinished(evt -> {
-//                    getChildren().remove(menu1);
-//                });
             });
 
-            MenuButton btnConnect = new MenuButton("Connecting");
-            btnConnect.setOnMouseClicked(event -> {
-
-//                getChildren().add(menu1);
-//
-//                TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu2);
-//                tt.setToX(menu2.getTranslateX() + offset);
-//
-//                TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menu1);
-//                tt1.setToX(menu2.getTranslateX());
-//
-//                tt.play();
-//                tt1.play();
-//
-//                tt.setOnFinished(evt -> {
-//                    getChildren().remove(menu2);
-//                });
-            });
-            MenuButton btnCreate = new MenuButton("Creating");
-            btnCreate.setOnMouseClicked(event -> {
-
-//                getChildren().add(menu1);
-//
-//                TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu2);
-//                tt.setToX(menu2.getTranslateX() + offset);
-//
-//                TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menu1);
-//                tt1.setToX(menu2.getTranslateX());
-//
-//                tt.play();
-//                tt1.play();
-//
-//                tt.setOnFinished(evt -> {
-//                    getChildren().remove(menu2);
-//                });
-            });
-
-            menu0.getChildren().addAll(btnStart, btnPlay,btnHelp, btnExit);
+            menu0.getChildren().addAll(btnStart, btnPlay, btnHelp, btnExit);
 
             menu1.getChildren().addAll(btnBack, btnCreateS, btnJoinG);
-            menu2.getChildren().addAll(btnConnect, btnCreate);
-            menu3.getChildren().addAll(btnBack2,inf0,inf1,inf2,inf3);
+            menu3.getChildren().addAll(btnBack2, inf0, inf1, inf2, inf3);
 
             Rectangle bg = new Rectangle(800, 600);
             bg.setFill(Color.GREY);
             bg.setOpacity(0.4);
 
-            getChildren().addAll(bg, menu0,te);
+            getChildren().addAll(bg, menu0, te);
         }
     }
 
