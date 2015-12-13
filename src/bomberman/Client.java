@@ -121,7 +121,7 @@ Thread t1 = new Thread() {
                 
                 SendMessageC(y,x);
                 }
-                catch(IOException e){
+                catch(Exception e){
             }
             }
                 
@@ -137,7 +137,7 @@ Thread t1 = new Thread() {
                 int x=2;
                 try{
                 
-                 DataInputStream in = new DataInputStream(socket.getInputStream());
+                final DataInputStream in = new DataInputStream(socket.getInputStream());
                 
                 if(in.available()!=0){
                 
@@ -145,7 +145,7 @@ Thread t1 = new Thread() {
                 ReceiveMessageC(in,y,2);
                 }
                 }
-                catch(IOException e){
+                catch(Exception e){
             }
             }
             
@@ -154,6 +154,8 @@ Thread t1 = new Thread() {
                 
             };
             t2.start();
+            
+            socket.close();
             
     }
     

@@ -64,7 +64,7 @@ public class Server {
                 
                 SendMessageS(y,2);
                 }
-                catch(IOException e){
+                catch(Exception e){
             }
             }
                 
@@ -82,13 +82,14 @@ public class Server {
                 
                 final DataInputStream in = new DataInputStream(clientSocket.getInputStream());
                 
+                
                 if(in.available()!=0){
                 
 
                 ReceiveMessageS(in,y,2);
                 }
                 }
-                catch(IOException e){
+                catch(Exception e){
             }
             }
             

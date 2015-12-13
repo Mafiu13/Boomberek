@@ -165,6 +165,8 @@ public class Boomek extends Application {
             MenuButton btnCreateS = new MenuButton("CREATE SERVER");
             btnCreateS.setOnMouseClicked(event -> {
 
+                primaryStage.hide();
+                
                 Server cl = new Server();
                 try{
                 cl.CreateServer();
@@ -172,6 +174,31 @@ public class Boomek extends Application {
                 catch(IOException e){
                     
                 }
+                
+//                boolean fl =false;
+//                
+//                Server cl = new Server();
+//                try{
+//                fl = cl.CreateServer();
+//                }
+//                catch(IOException e){
+//                    
+//                }
+//                
+//                //Conecting...
+//                
+//                if(fl == true){
+//                    
+//                    
+//                    
+//                    
+//                    
+//                    
+                }
+                
+                
+                
+                
 //                getChildren().add(menu2);
 //
 //                TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu1);
