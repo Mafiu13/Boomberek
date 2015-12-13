@@ -85,6 +85,29 @@ public class Boomek extends Application {
             VBox menu0 = new VBox(10);
             VBox menu1 = new VBox(10);
             VBox menu2 = new VBox(10);
+             VBox menu3 = new VBox(10);
+            
+            Text te = new Text(260,70, "Boomberman");
+           te.setFont(te.getFont().font(60));
+            te.setFill(Color.WHITE);
+            
+            Text inf0 = new Text(70,120, "Control your Bomberman and try to kill enemy Bomberman");
+            Text inf1 = new Text(70,160,"Use arrows to move Bomberman and SPACE to set the bomb");
+            Text inf2 = new Text(70,190,"Range of bomb's explosion will increase with time");
+            Text inf3 = new Text(70,230,"Good Luck!");
+                    
+                    
+                    
+           inf0.setFont(inf0.getFont().font(25));
+            inf0.setFill(Color.BLACK);
+            inf1.setFont(inf1.getFont().font(25));
+            inf1.setFill(Color.BLACK);
+            inf2.setFont(inf2.getFont().font(25));
+            inf2.setFill(Color.BLACK);
+            inf3.setFont(inf3.getFont().font(40));
+            inf3.setFill(Color.BLACK);
+            
+            
 
             menu0.setTranslateX(100);
             menu0.setTranslateY(200);
@@ -94,6 +117,9 @@ public class Boomek extends Application {
 
             menu2.setTranslateX(100);
             menu2.setTranslateY(200);
+            
+            menu3.setTranslateX(100);
+            menu3.setTranslateY(200);
 
             final int offset = 400;
 
@@ -103,21 +129,17 @@ public class Boomek extends Application {
             btnStart.setOnMouseClicked(event -> {
 
                 primaryStage.hide();
-                // new Thread() {
-                //    public void run() {
-
+  
                 Bomberman bomberman = new Bomberman(2);
                 bomberman.game();
-                //  }
-                //    }.start();
+
                 primaryStage.show();
-                //System.exit(0);
-                //root.setVisible(false);
+
 
             });
 
-            MenuButton btnOptions = new MenuButton("PLAY");
-            btnOptions.setOnMouseClicked(event -> {
+            MenuButton btnPlay = new MenuButton("PLAY");
+            btnPlay.setOnMouseClicked(event -> {
                 getChildren().add(menu1);
 
                 TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu0);
@@ -134,6 +156,53 @@ public class Boomek extends Application {
                 });
             });
 
+            MenuButton btnHelp = new MenuButton("HOW TO PLAY");
+            btnHelp.setOnMouseClicked(event -> {
+                getChildren().add(menu3);
+
+                TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu0);
+                tt.setToX(menu0.getTranslateX() - offset);
+
+                TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menu3);
+                tt1.setToX(menu0.getTranslateX());
+
+                tt.play();
+                tt1.play();
+
+                tt.setOnFinished(evt -> {
+                    getChildren().remove(menu0);
+                });
+            });
+            
+            MenuButton btnBack2 = new MenuButton("BACK");
+            btnBack2.setOnMouseClicked(event -> {
+                getChildren().add(menu0);
+                
+                
+
+                TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu3);
+                tt.setToX(menu3.getTranslateX() + offset);
+
+                TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menu0);
+                tt1.setToX(menu3.getTranslateX());
+
+                tt.play();
+                tt1.play();
+
+                tt.setOnFinished(evt -> {
+                    getChildren().remove(menu3);
+                });
+            });
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             MenuButton btnExit = new MenuButton("EXIT");
             btnExit.setOnMouseClicked(event -> {
                 System.exit(0);
@@ -162,7 +231,7 @@ public class Boomek extends Application {
 
                 boolean fl10 = false;
 
-                primaryStage.hide();
+                
 
                 Server ser = new Server();
                 try {
@@ -177,6 +246,8 @@ public class Boomek extends Application {
                 }
 
                 if (fl10 == true) {
+                    
+                    primaryStage.hide();
 
                     Bomberman bomberman = new Bomberman(1, ser);
                     bomberman.game();
@@ -193,42 +264,13 @@ public class Boomek extends Application {
                     primaryStage.show();
                 }
 
-//                    Thread t2 = new Thread() {
-//                        public void run() {
-//                            int y = 1;
-//                            int x = 2;
-//                            boolean fl = true;
-//
-//                            try {
-//
-//                                while (fl) {
-//
-//                                    cl.ReceiveMessageS(y, x);
-//                                }
-//
-//                            } catch (Exception e) {
-//                            }
-//                        }
-//                    };
-//                    t2.start();
-//
-//                    Thread r = new Thread() {
-//                        public void run() {
-//                            try {
-//                                cl.SendMessage(1, 2);
-//                            } catch (Exception e) {
-//                            }
-//                        }
-//
-//                    };
-//                    r.start();
             });
 
             MenuButton btnJoinG = new MenuButton("JOIN GAME");
             btnJoinG.setOnMouseClicked(event -> {
 
                 boolean fl11 = false;
-                primaryStage.hide();
+                
 
                 Client cl = new Client();
                 try {
@@ -239,10 +281,21 @@ public class Boomek extends Application {
                 }
 
                 if (fl11) {
-
+                    primaryStage.hide();
 //                    
                     Bomberman bomberman = new Bomberman(2, cl);
                     bomberman.game();
+                    
+                    try {
+                        cl.ClientClose();
+                    } catch (IOException e) {
+
+                    }
+
+                    primaryStage.show();
+                    
+                    
+                    
                 } else {
                     primaryStage.show();
                 }
@@ -300,16 +353,17 @@ public class Boomek extends Application {
 //                });
             });
 
-            menu0.getChildren().addAll(btnStart, btnOptions, btnExit);
+            menu0.getChildren().addAll(btnStart, btnPlay,btnHelp, btnExit);
 
             menu1.getChildren().addAll(btnBack, btnCreateS, btnJoinG);
             menu2.getChildren().addAll(btnConnect, btnCreate);
+            menu3.getChildren().addAll(btnBack2,inf0,inf1,inf2,inf3);
 
             Rectangle bg = new Rectangle(800, 600);
             bg.setFill(Color.GREY);
             bg.setOpacity(0.4);
 
-            getChildren().addAll(bg, menu0);
+            getChildren().addAll(bg, menu0,te);
         }
     }
 

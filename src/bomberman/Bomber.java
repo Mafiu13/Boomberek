@@ -19,6 +19,7 @@ public class Bomber extends Actors {
     protected boolean up, down, left, right, space;
     protected static final int BOMBER_SPEED = 1;
     protected boolean setB;
+    protected boolean bomb =true;
 
     public Bomber(Board board) {
         super(board);
@@ -57,7 +58,7 @@ public class Bomber extends Actors {
             vy = 0;
             y--;
         }
-        if (space) {
+        if (space&&bomb) {
             setB = true;
 
             System.out.println("bomba");
@@ -169,5 +170,12 @@ public class Bomber extends Actors {
                 break;
         }
         updateSpeed();
+    }
+    
+    
+    
+    public void blockBomb(boolean bomb){
+        
+        this.bomb =bomb;
     }
 }

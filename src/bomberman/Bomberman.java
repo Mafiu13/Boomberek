@@ -165,7 +165,7 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
                 {
                     bomb1.setX(44444);
                 }
-
+                b2.blockBomb(true);
                 timer.cancel(); //Wyłączamy taska
 
             }
@@ -192,6 +192,7 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
                     bomb2.setX(44444);
                 }
 
+                b1.blockBomb(true);
                 timer.cancel(); //Wyłączamy taska
 
             }
@@ -517,7 +518,6 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
 
         Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
 
-        paint_info(g);
         g.setColor(Color.white);
         g.fillRect(0, 0, getWidth(), getHeight());
 
@@ -538,6 +538,7 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
             //bylo bomb1.setB
             b2.setB(setB);
             startTimer = bomb1.getTimer();
+            b2.blockBomb(false);
         }
         if (b1.getB() == true) {
 
@@ -548,6 +549,7 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
             //bylo bomb1.setB
             b1.setB(setB);
             startTimer = bomb2.getTimer();
+            b1.blockBomb(false);
         }
 
         bomb1.paint(g);
@@ -620,7 +622,7 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
             g.drawString(s, Board.WIDTH / 2 - 120, Board.HEIGHT / 2 - 100);
             g.drawString("REMIS", Board.WIDTH / 2 - 70, Board.HEIGHT / 2);
         }
-
+        paint_info(g);
         strategy.show();
 
     }
@@ -710,46 +712,11 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
 
         if (startTimer2 == false) {
             g.setFont(new Font("Arial", Font.BOLD, 20));
-            g.setPaint(Color.green);
-            g.drawString("WARTOŚĆ POLA RAŻENIA WYNOSI " + CriticalRange, 0, 50);
+            g.setPaint(Color.red);
+            g.drawString("WARTOŚĆ POLA RAŻENIA WYNOSI " + CriticalRange, 250, 570);
 
         }
 
     }
 
-//    public static void main(String[] args) 
-//    {
-//        Bomberman bomberman= new Bomberman();
-//        bomberman.game();
-//    }
-    /*
-    
-    co ja potzrbuję dosstać:
-    X i Y playera
-    
-    czyli
-    
-    public void GetPosition(int x,int y,bool setB)
-    {
-    b1.setX(x);
-    b1.setY(y);
-    b1.getB()=setB;
-    }
-    oraz czy bomba została zasetowana- mam jakąś wartość boolową dla każdego z bombermanów setB();
-    jak dostanę true to mam pozycję bomby- jest taka sama jak pozycja bombermana który ją zasetował
-    dołożyłam timer związany z range- to już działa
-    bomber2 ma też już inny kolor- dwie klasy dziedziczące po Bomber
-    zrobiłam też obiekt bomba1 który jest zwiazany z konkretnym bomberem, będzie można 1 ustawiać- muszę jeszcze
-    zabezpieczyć przed odpalenniem wcześniejszym niż wyłączenie timera- jak będę miała czas
-    
-    jutro nie mogę już nic podziałać, jeśli możesz ogarnij tylko jakiekolwiek przesyłanie między klient-serwer
-    wydaje mi się że to co napisałam na fb ma sens, może nie jest zajebiste ale ma szanse zadziałać
-    w sensie łączymy program kliencki z konkretnym bombermanem, np b2 a serwer to b1
-    
-    
-    
-    }
-    
-    
-     */
 }

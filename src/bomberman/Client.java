@@ -24,16 +24,22 @@ public class Client extends ServClie {
 
     public boolean CreateClient() throws IOException {
         socket = null;
-
+nrp =0;
         while (flaga) {
+            
             try {
                 socket = new Socket(HOST, PORT);
             } catch (Exception e) {
                 System.err.println("Could not connect to " + HOST + ":" + PORT);
-                System.exit(1);
+                nrp++;
+                if(nrp==5){
+                    return false;
+                }
+                //System.exit(1);
             }
             if (socket != null) {
                 flaga = false;
+                
             }
 
         }
