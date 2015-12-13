@@ -23,6 +23,7 @@ import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.*;
+import java.io.IOException;
 
 /**
  *
@@ -48,9 +49,77 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
     private double newRange = CriticalRange;
     private boolean dead;
 
+    private int mover, actioner;
+    private static int move, action;
+    private static Move mov;
+
+    public ServClie socet;
+
     long startProgram = System.currentTimeMillis();
 
     public Bomberman(int player) {
+
+        this.player = player;
+        spriteCache = new SpriteCache();
+
+        JFrame window = new JFrame("BOMBERMAN");
+        JPanel panel = (JPanel) window.getContentPane();
+        setBounds(0, 0, Board.WIDTH, Board.HEIGHT);
+        panel.setPreferredSize(new Dimension(Board.WIDTH, Board.HEIGHT));
+        panel.setLayout(null);
+        panel.add(this);
+
+        window.setBounds(0, 0, Board.WIDTH, Board.HEIGHT);
+        window.setVisible(true);
+        window.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                //System.exit(0);
+                dead = true;
+            }
+        });
+
+        window.setResizable(false);
+
+        createBufferStrategy(2);
+        strategy = getBufferStrategy();
+        requestFocus();
+        addKeyListener(this);
+
+    }
+
+    public Bomberman(int player, Server soc) {
+        this.socet = soc;
+        this.player = player;
+        spriteCache = new SpriteCache();
+
+        JFrame window = new JFrame("BOMBERMAN");
+        JPanel panel = (JPanel) window.getContentPane();
+        setBounds(0, 0, Board.WIDTH, Board.HEIGHT);
+        panel.setPreferredSize(new Dimension(Board.WIDTH, Board.HEIGHT));
+        panel.setLayout(null);
+        panel.add(this);
+
+        window.setBounds(0, 0, Board.WIDTH, Board.HEIGHT);
+        window.setVisible(true);
+        window.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                //System.exit(0);
+                dead = true;
+            }
+        });
+
+        window.setResizable(false);
+
+        createBufferStrategy(2);
+        strategy = getBufferStrategy();
+        requestFocus();
+        addKeyListener(this);
+
+    }
+
+    public Bomberman(int player, Client soc) {
+
+        this.socet = soc;
         this.player = player;
         spriteCache = new SpriteCache();
 
@@ -161,44 +230,60 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
         switch (e.getKeyCode()) {
             case KeyEvent.VK_DOWN:
                 makeMove(this.player, Move.down);
+                try {
+                    socet.SendMessageI(11);
+                } catch (Exception g) {
+                }
                 break;
             case KeyEvent.VK_UP:
                 makeMove(this.player, Move.up);
+                try {
+                    socet.SendMessageI(12);
+                } catch (Exception g) {
+                }
                 break;
             case KeyEvent.VK_LEFT:
                 makeMove(this.player, Move.left);
+                try {
+                    socet.SendMessageI(13);
+                } catch (Exception g) {
+                }
                 break;
             case KeyEvent.VK_RIGHT:
                 makeMove(this.player, Move.right);
+                try {
+                    socet.SendMessageI(14);
+                } catch (Exception g) {
+                }
                 break;
             case KeyEvent.VK_SPACE:
                 makeMove(this.player, Move.bomb);
+                try {
+                    socet.SendMessageI(15);
+                } catch (Exception g) {
+                }
                 break;
 
         }
     }
-    
-    
-    
+
     public void makeMove(int player, Move move) {
         if (player == 1) {
             b1.makeMove(move);
-        }
-        else if (player == 2) {
+        } else if (player == 2) {
             b2.makeMove(move);
         }
-        
+
         // wyslij ze gracz wykonal ten ruch
     }
-    
+
     public void stopMove(int player, Move move) {
         if (player == 1) {
             b1.stopMove(move);
-        }
-        else if (player == 2) {
+        } else if (player == 2) {
             b2.stopMove(move);
         }
-        
+
         // wyslij ze gracz przerwal ten ruch
     }
 
@@ -206,23 +291,42 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
         switch (e.getKeyCode()) {
             case KeyEvent.VK_DOWN:
                 stopMove(this.player, Move.down);
+                try {
+                    socet.SendMessageI(21);
+                } catch (Exception g) {
+                }
                 break;
             case KeyEvent.VK_UP:
                 stopMove(this.player, Move.up);
+                try {
+                    socet.SendMessageI(22);
+                } catch (Exception g) {
+                }
                 break;
             case KeyEvent.VK_LEFT:
                 stopMove(this.player, Move.left);
+                try {
+                    socet.SendMessageI(23);
+                } catch (Exception g) {
+                }
                 break;
             case KeyEvent.VK_RIGHT:
                 stopMove(this.player, Move.right);
+                try {
+                    socet.SendMessageI(24);
+                } catch (Exception g) {
+                }
                 break;
             case KeyEvent.VK_SPACE:
                 stopMove(this.player, Move.bomb);
+                try {
+                    socet.SendMessageI(25);
+                } catch (Exception g) {
+                }
                 break;
 
         }
 
-        
     }
 
     public void keyTyped(KeyEvent e) {
@@ -232,7 +336,7 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
 
         startTimer2 = true;
         int brick_size = 50;
-        
+
         b1 = new B1(this);
         b1.setX(0);
         b1.setY(0);
@@ -240,8 +344,6 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
         b2 = new B2(this);
         b2.setX((int) Board.WIDTH - 40);
         b2.setY((int) Board.HEIGHT - 90);
-        
-        
 
         actors = new ArrayList();
         //        bombs=new ArrayList();
@@ -550,23 +652,58 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
     }
 
     public void game() {
-        
-        
-        
-        //nowy watek ktory bedzie wczytywal iformacje od programu i wukonywal make/stop mow
-        //    usedTime=1000;
         initWorld();
         dead = false;
+
+        Thread t2 = new Thread() {
+            public void run() {
+                boolean fl = true;
+
+                while (fl) {
+
+                    mover = 0;
+
+                    try {
+
+                        mover = socet.ReceiveMessageI(mover);
+
+                    } catch (Exception e) {
+                    }
+
+                    mov = Move.CnvIntEnumI(mover);
+                    if (player == 1) {
+
+                        if ((mover == 11) || (mover == 12) || (mover == 13) || (mover == 14) || (mover == 15)) {
+                            makeMove(2, mov);
+                        }
+                        if ((mover == 21) || (mover == 22) || (mover == 23) || (mover == 24) || (mover == 25)) {
+                            stopMove(2, mov);
+                        }
+                    }
+
+                    if (player == 2) {
+
+                        if ((mover == 11) || (mover == 12) || (mover == 13) || (mover == 14) || (mover == 15)) {
+                            makeMove(1, mov);
+                        }
+                        if ((mover == 21) || (mover == 22) || (mover == 23) || (mover == 24) || (mover == 25)) {
+                            stopMove(1, mov);
+                        }
+                    }
+                }
+            }
+        };
+        t2.start();
+
         while (isVisible() && !dead) {
             updateWorld();
             paintWorld();
+
             try {
                 Thread.sleep(Board.SPEED);
             } catch (InterruptedException e) {
             }
-
         }
-
     }
 
     public void paint_info(Graphics2D g) {

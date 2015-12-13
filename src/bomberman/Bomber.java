@@ -126,9 +126,9 @@ public class Bomber extends Actors {
         }
 
     }
-    
+
     public void makeMove(Move move) {
-        switch(move) {
+        switch (move) {
             case up:
                 up = true;
                 break;
@@ -149,10 +149,9 @@ public class Bomber extends Actors {
         }
         updateSpeed();
     }
-    
-    
+
     public void stopMove(Move move) {
-        switch(move) {
+        switch (move) {
             case up:
                 up = false;
                 break;

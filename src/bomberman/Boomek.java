@@ -80,9 +80,7 @@ public class Boomek extends Application {
 
     private class GameMenu extends Parent {
 
-
         public GameMenu(Stage primaryStage) throws IOException {
-
 
             VBox menu0 = new VBox(10);
             VBox menu1 = new VBox(10);
@@ -101,7 +99,6 @@ public class Boomek extends Application {
 
             menu1.setTranslateX(offset);
 
-
             MenuButton btnStart = new MenuButton("START");
             btnStart.setOnMouseClicked(event -> {
 
@@ -111,7 +108,6 @@ public class Boomek extends Application {
 
                 Bomberman bomberman = new Bomberman(2);
                 bomberman.game();
-
                 //  }
                 //    }.start();
                 primaryStage.show();
@@ -119,7 +115,6 @@ public class Boomek extends Application {
                 //root.setVisible(false);
 
             });
-
 
             MenuButton btnOptions = new MenuButton("PLAY");
             btnOptions.setOnMouseClicked(event -> {
@@ -165,75 +160,93 @@ public class Boomek extends Application {
             MenuButton btnCreateS = new MenuButton("CREATE SERVER");
             btnCreateS.setOnMouseClicked(event -> {
 
+                boolean fl10 = false;
+
                 primaryStage.hide();
-                
-                Server cl = new Server();
-                try{
-                cl.CreateServer();
-                }
-                catch(IOException e){
-                    
-                }
-                
-//                boolean fl =false;
-//                
-//                Server cl = new Server();
-//                try{
-//                fl = cl.CreateServer();
-//                }
-//                catch(IOException e){
-//                    
-//                }
-//                
-//                //Conecting...
-//                
-//                if(fl == true){
-//                    
-//                    
-//                    
-//                    
-//                    
-//                    
-                }
-                
-                
-                
-                
-//                getChildren().add(menu2);
-//
-//                TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu1);
-//                tt.setToX(menu1.getTranslateX() - offset);
-//
-//                TranslateTransition tt1 = new TranslateTransition(Duration.seconds(0.5), menu2);
-//                tt1.setToX(menu1.getTranslateX());
-//
-//                tt.play();
-//                tt1.play();
-//
-//                tt.setOnFinished(evt -> {
-//                    getChildren().remove(menu1);
-//                });
-//                primaryStage.hide();
-//
-//
-//                        Bomberman bomberman = new Bomberman();
-//                        bomberman.game();
-//
-//                
-//                primaryStage.show();
 
+                Server ser = new Server();
+                try {
+                    ser.CreateServer();
+                } catch (IOException e) {
 
+                }
+
+                try {
+                    fl10 = ser.Connected();
+                } catch (Exception e) {
+                }
+
+                if (fl10 == true) {
+
+                    Bomberman bomberman = new Bomberman(1, ser);
+                    bomberman.game();
+
+                    try {
+                        ser.ServerClose();
+                    } catch (IOException e) {
+
+                    }
+
+                    primaryStage.show();
+
+                } else {
+                    primaryStage.show();
+                }
+
+//                    Thread t2 = new Thread() {
+//                        public void run() {
+//                            int y = 1;
+//                            int x = 2;
+//                            boolean fl = true;
+//
+//                            try {
+//
+//                                while (fl) {
+//
+//                                    cl.ReceiveMessageS(y, x);
+//                                }
+//
+//                            } catch (Exception e) {
+//                            }
+//                        }
+//                    };
+//                    t2.start();
+//
+//                    Thread r = new Thread() {
+//                        public void run() {
+//                            try {
+//                                cl.SendMessage(1, 2);
+//                            } catch (Exception e) {
+//                            }
+//                        }
+//
+//                    };
+//                    r.start();
             });
 
             MenuButton btnJoinG = new MenuButton("JOIN GAME");
             btnJoinG.setOnMouseClicked(event -> {
+
+                boolean fl11 = false;
+                primaryStage.hide();
+
                 Client cl = new Client();
-                try{
-                cl.CreateClient();
+                try {
+                    fl11 = cl.CreateClient();
+
+                } catch (IOException e) {
+
                 }
-                catch(IOException e){
-                    
+
+                if (fl11) {
+
+//                    
+                    Bomberman bomberman = new Bomberman(2, cl);
+                    bomberman.game();
+                } else {
+                    primaryStage.show();
                 }
+
 //                getChildren().add(menu2);
 //
 //                TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu1);
@@ -252,8 +265,7 @@ public class Boomek extends Application {
 
             MenuButton btnConnect = new MenuButton("Connecting");
             btnConnect.setOnMouseClicked(event -> {
-                
-                
+
 //                getChildren().add(menu1);
 //
 //                TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu2);
@@ -271,7 +283,7 @@ public class Boomek extends Application {
             });
             MenuButton btnCreate = new MenuButton("Creating");
             btnCreate.setOnMouseClicked(event -> {
-                
+
 //                getChildren().add(menu1);
 //
 //                TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu2);
@@ -287,7 +299,6 @@ public class Boomek extends Application {
 //                    getChildren().remove(menu2);
 //                });
             });
-
 
             menu0.getChildren().addAll(btnStart, btnOptions, btnExit);
 

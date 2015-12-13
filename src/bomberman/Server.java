@@ -5,7 +5,7 @@
  */
 package bomberman;
 
-import static bomberman.Client.flaga1;
+//import static bomberman.Client.flaga1;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,7 +15,7 @@ import java.net.Socket;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-public class Server {
+public class Server extends ServClie {
 
     private static final int PORT = 50000;
     static boolean flaga = true;
@@ -38,180 +38,115 @@ public class Server {
 
         System.out.print("Wating for connection...");
 
-        while (flaga) {
-            System.out.print(".");
-            clientSocket = serverSocket.accept();
-            if (clientSocket != null) {
-                flaga = false;
-            }
-
-        }
-        System.out.println("\nClient connected on port " + PORT);
-
-//        final PrintWriter out = new PrintWriter(clientSocket.getOutputStream(),true);  
-//        final BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));  
-        //final DataInputStream in = new DataInputStream(clientSocket.getInputStream());
-        //final DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
-        
-        
-        
-        Thread t1 = new Thread() {
-            public void run(){
-                int y =1;
-                int x=2;
-                
-                try{
-                
-                SendMessageS(y,2);
-                }
-                catch(Exception e){
-            }
-            }
-                
-                
-                
-            };
-            t1.start();
-            
-            
-            Thread t2 = new Thread() {
-            public void run(){
-                int y =1;
-                int x=2;
-                try{
-                
-                final DataInputStream in = new DataInputStream(clientSocket.getInputStream());
-                
-                
-                if(in.available()!=0){
-                
-
-                ReceiveMessageS(in,y,2);
-                }
-                }
-                catch(Exception e){
-            }
-            }
-            
-                
-                
-                
-            };
-            t2.start();
-            
-            
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-//        nrp = 2;
-//        move = 1;
-//        stop = 3;
-        
-
-        //       out.println(nrp); 
-//while(flaga1) 
-//{
-// out.writeInt(nrp);
-//        System.out.println(nrp);
-//        
-//        out.writeInt(move);
-//        System.out.println(move);
-//        
-//}
-
-
-//for(int i=0; i<10; i++){
+//                Thread t2 = new Thread() {
+//            public void run(){
+//                int y =1;
+//                int x=2;
+//                boolean fl = true;
+//                
+//                try{
 //
-//        out.writeInt(nrp);
-//       System.out.println(nrp);
+//                    while(fl){
 //
+//                
 //
-//       out.writeInt(move);
-//       System.out.println(move);
+//                ReceiveMessageS(y,x);}
 //
-//       out.writeInt(stop);
-//       System.out.println(stop);
-//       
-//}
-//while(flaga1){
-//    
-//    if(in.available()!=0){
-//        nrp = in.readInt();
-//               System.out.println(nrp);
-//        
-//    }
-//    else{
-//        
-//        System.out.println("nic");
-//    }
-//    if(in.available()!=0){
-//        move = in.readInt();
-//               System.out.println(move);
-//        
-//    }
-//     else{
-//        
-//        System.out.println("nic");
-//    }
-//    if(in.available()!=0){
-//        stop = in.readInt();
-//               System.out.println(stop);
-//        
-//    }
-//    else{
-//        
-//        System.out.println("nic");
-//    }
-    
-    
-    //}
-
- 
+//                }
+//                catch(Exception e){
+//            }
+//            }            };
+//           t2.start();
     }
-    
-    
-    public void SendMessageS (int move, int action ) throws IOException{
-        
+
+    public void SendMessage(int move, int action) throws IOException {
+
         final DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
-        
+
+        System.out.println("Send: ");
+
         out.writeInt(move);
         System.out.println(move);
-        
+
         out.writeInt(action);
-        System.out.println(action);
+        System.out.println(action);;
     }
-    
-    public void ReceiveMessageS(DataInputStream in, int move, int action) throws IOException{
-        
-        
-        move = in.readInt(); 
+
+    public void ReceiveMessage(int move, int action) throws IOException {
+
+        final DataInputStream in = new DataInputStream(clientSocket.getInputStream());
+
+        if (in.available() != 0) {
+
+            System.out.println("Received: ");
+
+            move = in.readInt();
+            System.out.println(move);
+
+            action = in.readInt();
+            System.out.println(action);
+        }
+
+    }
+
+    public void SendMessageI(int move) throws IOException {
+
+        final DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
+
+        System.out.println("Send: ");
+
+        out.writeInt(move);
         System.out.println(move);
-        
-        action = in.readInt();
-        System.out.println(action);
-        
-        
+
     }
-    
-    
-    
-    
+
+    public boolean Connected() throws IOException {
+//        
+//        for (int i=0;i<5;i++) {
+//            System.out.print(".");
+
+        clientSocket = serverSocket.accept();
+//            if ((clientSocket != null) || (i==4)) {
+//                serverSocket.close();
+//                flaga = false;
+//            }
+
+//        }
+        System.out.println("\nClient connected on port " + PORT);
+
+        return true;
+    }
+
+    public int ReceiveMessageI(int move) throws IOException {
+
+        final DataInputStream in = new DataInputStream(clientSocket.getInputStream());
+
+        if (in.available() != 0) {
+
+            System.out.println("Received: ");
+
+            move = in.readInt();
+            System.out.println(move);
+        }
+        return move;
+    }
+
+    public void ServerClose() throws IOException {
+
+        clientSocket.close();
+        serverSocket.close();
+
+    }
+
+//    public int SMove (int move){
+//        
+//        return move;
+//        
+//    }
+//    
+//    public int SAction (int action){
+//        
+//        return action;
+//        
+//    }
 }

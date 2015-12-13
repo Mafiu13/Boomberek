@@ -18,6 +18,4 @@ public class B2 extends Bomber {
         setSpriteName("bomber2.jpg");
     }
 
-    
-
 }
