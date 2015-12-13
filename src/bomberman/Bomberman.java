@@ -157,6 +157,7 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
 
 // naciśnięcie klawisza skutkuje ruchem b1, coś podobnego dla b2 tylko z drugiego watku od klienta trzeba pobierac info
     public void keyPressed(KeyEvent e) {
+        //dodac wsyłanie do socketa
         switch (e.getKeyCode()) {
             case KeyEvent.VK_DOWN:
                 makeMove(this.player, Move.down);
@@ -549,6 +550,10 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
     }
 
     public void game() {
+        
+        
+        
+        //nowy watek ktory bedzie wczytywal iformacje od programu i wukonywal make/stop mow
         //    usedTime=1000;
         initWorld();
         dead = false;

@@ -109,7 +109,7 @@ public class Boomek extends Application {
                 // new Thread() {
                 //    public void run() {
 
-                Bomberman bomberman = new Bomberman(1);
+                Bomberman bomberman = new Bomberman(2);
                 bomberman.game();
 
                 //  }
