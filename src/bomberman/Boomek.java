@@ -93,9 +93,9 @@ public class Boomek extends Application {
             te.setFont(Font.font("Arial", 60));
             te.setFill(Color.WHITE);
 
-//            Text con = new Text(240,400, "Conecting...");
-//           con.setFont(Font.font("Arial",40));
-//            con.setFill(Color.WHITE);
+            Text con = new Text(180,400, "Could not connect to server");
+           con.setFont(Font.font("Arial",40));
+            con.setFill(Color.WHITE);
 //            
 //            Text cre = new Text(220,400, "Creating Server");
 //           cre.setFont(Font.font("Arial",60));
@@ -203,6 +203,7 @@ public class Boomek extends Application {
 
             MenuButton btnBack = new MenuButton("BACK");
             btnBack.setOnMouseClicked(event -> {
+                getChildren().remove(con);
                 getChildren().add(menu0);
 
                 TranslateTransition tt = new TranslateTransition(Duration.seconds(0.25), menu1);
@@ -221,6 +222,7 @@ public class Boomek extends Application {
 
             MenuButton btnCreateS = new MenuButton("CREATE SERVER");
             btnCreateS.setOnMouseClicked(event -> {
+                getChildren().remove(con);
                 primaryStage.hide();
                 boolean fl10 = false;
 
@@ -258,6 +260,7 @@ public class Boomek extends Application {
             MenuButton btnJoinG = new MenuButton("JOIN GAME");
             btnJoinG.setOnMouseClicked(event -> {
                 boolean conect = false;
+                getChildren().remove(con);
 
                 boolean fl11 = false;
 
@@ -285,6 +288,9 @@ public class Boomek extends Application {
 
                 } else {
                     primaryStage.show();
+                    getChildren().add(con);
+                    
+                    
                 }
 
             });
