@@ -25,8 +25,9 @@ public abstract class ServClie {
 
     public abstract void ReceiveMessage(int move, int action) throws IOException;
 
-    public abstract int ReceiveMessageI(int move) throws IOException;
+    public abstract int ReceiveMessageI(int move, DataInputStream in) throws IOException;
 
     public abstract void SendMessageI(int move) throws IOException;
 
+    public abstract DataInputStream getDataInputStream() throws IOException;
 }

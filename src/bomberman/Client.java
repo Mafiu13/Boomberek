@@ -66,6 +66,14 @@ nrp =0;
 
         //socket.close();
     }
+    
+    public DataInputStream getDataInputStream ()throws IOException{
+        
+        final DataInputStream in = new DataInputStream(socket.getInputStream());
+        
+        return in;
+    }
+    
 
     public void SendMessage(int move, int action) throws IOException {
 
@@ -108,9 +116,8 @@ nrp =0;
 
     }
 
-    public int ReceiveMessageI(int move) throws IOException {
+    public int ReceiveMessageI(int move, DataInputStream in) throws IOException {
 
-        final DataInputStream in = new DataInputStream(socket.getInputStream());
 
         if (in.available() != 0) {
 

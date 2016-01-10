@@ -58,6 +58,20 @@ public class Server extends ServClie {
 //            }            };
 //           t2.start();
     }
+    
+    
+    
+    public DataInputStream getDataInputStream() throws IOException{
+      
+        final DataInputStream in = new DataInputStream(clientSocket.getInputStream());
+        
+        
+        return in;
+    }
+    
+    
+    
+    
 
     public void SendMessage(int move, int action) throws IOException {
 
@@ -117,9 +131,9 @@ public class Server extends ServClie {
         return true;
     }
 
-    public int ReceiveMessageI(int move) throws IOException {
+    public int ReceiveMessageI(int move, DataInputStream in) throws IOException {
 
-        final DataInputStream in = new DataInputStream(clientSocket.getInputStream());
+        
 
         if (in.available() != 0) {
 

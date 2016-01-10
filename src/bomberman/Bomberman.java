@@ -24,6 +24,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.*;
 import java.io.IOException;
+import java.io.DataInputStream;
 
 /**
  *
@@ -43,7 +44,8 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
 //    private Bomb bomb;
     private boolean startTimer;
     private boolean startTimer2;
-
+    private int czas_gry;
+    private boolean init;
     private boolean setB;
     private double CriticalRange = 70;
     private double newRange = CriticalRange;
@@ -199,6 +201,37 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
         }
 
     }
+    
+    public class StartGame {
+
+        Timer timer;
+
+        public StartGame(int seconds) {
+            timer = new Timer();
+            timer.schedule(new RemindTask2(), seconds * 1000);
+
+        }
+
+        class RemindTask2 extends TimerTask {
+
+            public void run() {
+                checkRange();
+
+                {
+                  
+                    czas_gry++;
+                    init=true;
+                }
+
+              
+                timer.cancel(); //Wyłączamy taska
+                
+
+            }
+        }
+
+    }
+    
 
     public class ReminderBeep {
 //  Toolkit toolkit;
@@ -337,7 +370,8 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
 
         startTimer2 = true;
         int brick_size = 50;
-
+        init=true;
+        czas_gry=0;
         b1 = new B1(this);
         b1.setX(0);
         b1.setY(0);
@@ -421,6 +455,7 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
             actors.add(b);
 
         }
+         
 
     }
 
@@ -557,12 +592,17 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
 
         b1.paint(g);
         b2.paint(g);
-
-        //ogolnie jesli ma byc wiecej bomb to wtedy lista
+        if(init)
+        {
+            init=false;
+        new StartGame(1);
+        }
+//ogolnie jesli ma byc wiecej bomb to wtedy lista
         {
             if (startTimer) {
                 //    Thread.sleep(5000);
                 new Reminder(2);
+                
                 System.out.format("Task scheduled.%n");
                 // bomb.setX(1000);
                 // bomb.setY(1000);
@@ -646,6 +686,7 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
 
         // tutaj kolizje itd
         checkCollisions();
+       
 
     }
 
@@ -660,6 +701,16 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
         Thread t2 = new Thread() {
             public void run() {
                 boolean fl = true;
+                DataInputStream in=null;
+                
+                try {
+
+                        in=socet.getDataInputStream();
+
+                    } catch (Exception e) {
+                    }
+                
+                
 
                 while (fl) {
 
@@ -667,7 +718,7 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
 
                     try {
 
-                        mover = socet.ReceiveMessageI(mover);
+                        mover = socet.ReceiveMessageI(mover,in);
 
                     } catch (Exception e) {
                     }
@@ -713,7 +764,7 @@ public class Bomberman extends Canvas implements Board, KeyListener { // canvas 
         if (startTimer2 == false) {
             g.setFont(new Font("Arial", Font.BOLD, 20));
             g.setPaint(Color.red);
-            g.drawString("WARTOŚĆ POLA RAŻENIA WYNOSI " + CriticalRange, 250, 570);
+            g.drawString("WARTOŚĆ POLA RAŻENIA WYNOSI " + CriticalRange + "czas gry to: "+czas_gry, 250, 570);
 
         }
 
